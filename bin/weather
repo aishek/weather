@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'weather'
+require 'optparse'
+require 'awesome_print'
+
+service = nil
+city = nil
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: weather [options]'
+
+  opts.on('-s', '--service NAME', 'Service to retrieve weather from (metaweather, openweathermap)') do |value|
+    service = value
+  end
+
+  opts.on('-c', '--city NAME', 'City to retrieve weather for') do |value|
+    city = value
+  end
+
+  opts.on('-h', '--help', 'Prints this help') do
+    puts opts
+    exit
+  end
+end
+
+opt_parser.parse!(ARGV)
+if service.nil? || city.nil?
+  puts opt_parser.help
+  exit
+end
+
+puts Weather.get_details(service: service, city: city)

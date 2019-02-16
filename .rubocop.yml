@@ -1,0 +1,17 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - weatherb.gemspec
+    - vendor/bundle/**/*
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - test/**/*
+
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - bin/weather
