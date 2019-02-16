@@ -1,5 +1,7 @@
 # Weather
 
+[![Build Status](https://travis-ci.org/aishek/weather.svg?branch=master)](https://travis-ci.org/aishek/weather)
+
 Утилита командной строки, которая возвращает информацию о погоде для указанного города.
 
     bin/weather --service openweathermap --city berlin
