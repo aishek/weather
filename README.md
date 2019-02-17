@@ -9,7 +9,11 @@
 ## Использование библиотеки
 
     require 'weather'
-    Weather.get_details(service: 'metaweather', city: 'moscow')
+
+    weather = Weather.new(service: service, api_key: api_key)
+    details = weather.get_details(city: city)
+
+    puts "Температура воздуха — #{details[:temperature]} градуса цельсия, ветер #{details[:wind][:speed]} м/с, давление — #{details[:air_pressure]} мм ртутного столба."
 
 ## Добавление нового сервиса
 

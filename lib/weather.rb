@@ -8,13 +8,12 @@ require 'weather/service/openweathermap'
 #
 # Get weather by service and city
 #
-module Weather
-  class Error < StandardError; end
+class Weather
+  def initialize(service: nil, **options)
+    @service = Weather::Service.create(service, options)
+  end
 
-  def self.get_details(service: nil, city: nil)
-    service_provider = Weather::Service.create(service)
-    details = service_provider.get_details(city)
-
-    "Температура воздуха — #{details[:temperature]} градуса цельсия, ветер #{details[:wind][:speed]} м/с, давление — #{details[:air_pressure]} мм ртутного столба." # rubocop:disable LineLength
+  def get_details(city: nil)
+    @service.get_details(city)
   end
 end

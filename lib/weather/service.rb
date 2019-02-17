@@ -6,11 +6,19 @@
 module Weather::Service
   class UnknownServiceError < RuntimeError; end
 
-  def self.create(name)
-    const_name = "Weather::Service::#{name.capitalize}"
-    const = Object.const_get(const_name)
-    const
-  rescue NameError
-    raise UnknownServiceError, "Service #{name} is unknown"
+  class << self
+    def create(name, options = {})
+      klass = service_klass(name)
+      klass.new(options)
+    end
+
+    private
+
+    def service_klass(name)
+      const_name = "Weather::Service::#{name.capitalize}"
+      Object.const_get(const_name)
+    rescue StandardError
+      raise UnknownServiceError, "Service #{name} is unknown"
+    end
   end
 end
