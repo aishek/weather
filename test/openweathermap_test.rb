@@ -15,7 +15,9 @@ class WeatherTest < Minitest::Test
     end
 
     assert do
-      Weather.new(service: 'openweathermap', api_key: 'key', http_client: http_client).get_details(city: 'tver') == { # rubocop:disable LineLength
+      Weather.new(
+        Weather::Service::Openweathermap.new(api_key: 'key', http_client: http_client)
+      ).get_details(city: 'tver') == {
         temperature: 23,
         wind: {
           speed: 2,
@@ -28,7 +30,7 @@ class WeatherTest < Minitest::Test
 
   def test_raise_on_no_api_key_openweathermap
     assert_raises Weather::Service::Openweathermap::NoApiKeyError do
-      Weather.new(service: 'openweathermap').get_details(city: 'tver')
+      Weather.new(Weather::Service::Openweathermap.new).get_details(city: 'tver')
     end
   end
 end

@@ -9,8 +9,8 @@ require 'weather/service/openweathermap'
 # Get weather by service and city
 #
 class Weather
-  def initialize(service: nil, **options)
-    @service = Weather::Service.create(service, options)
+  def initialize(service)
+    @service = service
   end
 
   def get_details(city: nil)

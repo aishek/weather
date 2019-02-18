@@ -10,7 +10,7 @@
 
     require 'weather'
 
-    weather = Weather.new(service: service, api_key: api_key)
+    weather = Weather.new(Weather::Service::Metaweather.new)
     details = weather.get_details(city: city)
 
     puts "Температура воздуха — #{details[:temperature]} градуса цельсия, ветер #{details[:wind][:speed]} м/с, давление — #{details[:air_pressure]} мм ртутного столба."

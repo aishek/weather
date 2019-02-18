@@ -17,7 +17,9 @@ class WeatherTest < Minitest::Test
     end
 
     assert do
-      Weather.new(service: 'metaweather', http_client: http_client).get_details(city: 'tver') == {
+      Weather.new(
+        Weather::Service::Metaweather.new(http_client: http_client)
+      ).get_details(city: 'tver') == {
         temperature: 23,
         wind: {
           speed: 2,
@@ -40,7 +42,9 @@ class WeatherTest < Minitest::Test
     end
 
     assert_raises Weather::Service::Metaweather::NoCityFoundError do
-      Weather.new(service: 'metaweather', http_client: http_client).get_details(city: 'vavilon')
+      Weather.new(
+        Weather::Service::Metaweather.new(http_client: http_client)
+      ).get_details(city: 'vavilon')
     end
   end
 
@@ -58,7 +62,9 @@ class WeatherTest < Minitest::Test
     end
 
     assert_raises Weather::Service::Metaweather::NoWeatherDetailsError do
-      Weather.new(service: 'metaweather', http_client: http_client).get_details(city: 'vavilon')
+      Weather.new(
+        Weather::Service::Metaweather.new(http_client: http_client)
+      ).get_details(city: 'vavilon')
     end
   end
 end

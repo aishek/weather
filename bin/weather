@@ -7,12 +7,13 @@ require 'optparse'
 require 'awesome_print'
 
 options = {}
+service_name = nil
 
 opt_parser = OptionParser.new do |opts|
   opts.banner = 'Usage: weather [options]'
 
   opts.on('-s', '--service NAME', 'Service to retrieve weather from (metaweather, openweathermap)') do |value|
-    options[:service] = value
+    service_name = value
   end
 
   opts.on('-a', '--api_key KEY', 'API Key for service (need for some services)') do |value|
@@ -30,10 +31,11 @@ opt_parser = OptionParser.new do |opts|
 end
 
 opt_parser.parse!(ARGV)
-if options[:service].nil? || options[:city].nil?
+if service_name.nil? || options[:city].nil?
   puts opt_parser.help
   exit
 end
 
-details = Weather.new(options).get_details(city: options[:city])
+service = Weather::Service.create(service_name, options)
+details = Weather.new(service).get_details(city: options[:city])
 puts "Температура воздуха — #{details[:temperature]} градуса цельсия, ветер #{details[:wind][:speed]} м/с, давление — #{details[:air_pressure]} мм ртутного столба."
